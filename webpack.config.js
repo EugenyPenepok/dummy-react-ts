@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const PnpWebpackPlugin = require(`pnp-webpack-plugin`);
 
 const config = {
   entry: [
@@ -83,6 +84,7 @@ const config = {
     }),
   ],
   resolve: {
+    plugins: [PnpWebpackPlugin],
     extensions: [
       '.tsx',
       '.ts',
@@ -91,6 +93,11 @@ const config = {
     alias: {
       'react-dom': '@hot-loader/react-dom',
     },
+  },
+  resolveLoader: {
+    plugins: [
+      PnpWebpackPlugin.moduleLoader(module),
+    ],
   },
   optimization: {
     runtimeChunk: 'single',
